@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Máquinas{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h3 class="mb-0">Minhas Máquinas</h3>
+    <div class="text-muted">Cadastre e gerencie suas máquinas.</div>
+  </div>
+  <a class="btn btn-dark" href="{% url 'machine_create' %}">+ Nova máquina</a>
+</div>
+
+{% if machines %}
+  <div class="card shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Modelo</th>
+            <th>Serial</th>
+            <th>Cidade/UF</th>
+            <th class="text-end">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in machines %}
+            <tr>
+              <td>{{ m.id }}</td>
+              <td>{{ m.model.name }}</td>
+              <td>{{ m.serial|default:"-" }}</td>
+              <td>{{ m.city|default:"-" }}/{{ m.uf|default:"-" }}</td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'machine_edit' m.id %}">Editar</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="alert alert-info">
+    Você ainda não cadastrou nenhuma máquina.
+    <a href="{% url 'machine_create' %}" class="alert-link">Clique aqui para cadastrar a primeira.</a>
+  </div>
+{% endif %}
+{% endblock %}

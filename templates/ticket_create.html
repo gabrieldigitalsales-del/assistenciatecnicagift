@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Novo Chamado{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h3 class="mb-0">Novo Chamado</h3>
+    <div class="text-muted">Envie descrição + fotos/vídeos (opcional).</div>
+  </div>
+  <a class="btn btn-outline-secondary" href="{% url 'tickets_list' %}">Voltar</a>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Máquina</label>
+          {{ form.machine }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Categoria</label>
+          {{ form.category }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Sintoma</label>
+          {{ form.symptom }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Prioridade</label>
+          {{ form.priority }}
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Descrição</label>
+          {{ form.description }}
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Fotos/Vídeos (opcional)</label>
+          {{ form.media_files }}
+          <div class="form-text">Você pode selecionar mais de um arquivo.</div>
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-dark" type="submit">Criar chamado</button>
+        <a class="btn btn-outline-secondary" href="{% url 'tickets_list' %}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
