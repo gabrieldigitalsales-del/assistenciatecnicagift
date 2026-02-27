@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="max-w-6xl mx-auto px-4 py-10">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-black">Catálogo de máquinas</h1>
+      <p class="mt-2 text-slate-600">Sem compra online: aqui você vê detalhes e solicita orçamento.</p>
+    </div>
+
+    <form class="flex gap-2" method="get">
+      <input name="q" value="{{ q }}" placeholder="Buscar máquina..."
+             class="w-full md:w-72 px-4 py-2 rounded-2xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-red-100"/>
+      <button class="px-4 py-2 rounded-2xl btn-primary text-white font-bold">Buscar</button>
+    </form>
+  </div>
+
+  <div class="mt-8 grid md:grid-cols-3 gap-4">
+    {% for m in machines %}
+    <a href="{{ m.get_absolute_url }}" class="p-6 rounded-3xl border border-slate-200 hover:shadow-lg transition bg-white">
+      <div class="font-black text-lg">{{ m.name }}</div>
+      <p class="mt-2 text-sm text-slate-600">{{ m.short_description }}</p>
+      <div class="mt-4 text-sm font-bold text-[var(--brand)]">Ver detalhes →</div>
+    </a>
+    {% empty %}
+    <div class="p-6 rounded-3xl border border-slate-200 bg-slate-50 text-sm text-slate-600">
+      Nenhuma máquina encontrada.
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "assistencia/base.html" %}
+{% block title %}Chamado #{{ ticket.id }}{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start justify-content-between mb-4">
+  <div>
+    <h3 class="mb-0">Chamado #{{ ticket.id }}</h3>
+    <div class="text-muted small">
+      Máquina: <strong>{{ ticket.machine }}</strong> •
+      Status: <strong>{{ ticket.get_status_display }}</strong> •
+      Prioridade: <strong>{{ ticket.get_priority_display }}</strong>
+    </div>
+  </div>
+  <a class="btn btn-outline-secondary" href="{% url 'assistencia:tickets_list' %}">
+    Voltar
+  </a>
+</div>
+
+<!-- DESCRIÇÃO -->
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-white fw-bold">
+    Descrição do Problema
+  </div>
+  <div class="card-body">
+    <div class="text-muted small mb-2">
+      Criado em {{ ticket.created_at|date:"d/m/Y H:i" }} •
+      Atualizado em {{ ticket.updated_at|date:"d/m/Y H:i" }}
+    </div>
+    <div>
+      {{ ticket.description|linebreaksbr }}
+    </div>
+  </div>
+</div>
+
+<!-- MÍDIAS -->
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-white fw-bold">
+    Arquivos Anexados
+  </div>
+  <div class="card-body">
+    {% if media %}
+      <div class="list-group">
+        {% for file in media %}
+          <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+             href="{{ file.file.url }}" target="_blank">
+            <span class="text-truncate" style="max-width:70%;">
+              {{ file.file.name }}
+            </span>
+            <small class="text-muted">
+              {{ file.created_at|date:"d/m/Y H:i" }}
+            </small>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-muted">Nenhum arquivo anexado.</div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- MENSAGENS -->
+<div class="card shadow-sm">
+  <div class="card-header bg-white fw-bold">
+    Conversa
+  </div>
+  <div class="card-body">
+
+    {% if messages_list %}
+      {% for msg in messages_list %}
+        <div class="p-3 mb-3 rounded border {% if msg.sender_role == 'CLIENT' %}bg-light{% endif %}">
+          <div class="d-flex justify-content-between">
+            <strong>
+              {% if msg.sender_role == 'CLIENT' %}
+                Você
+              {% else %}
+                Empresa
+              {% endif %}
+            </strong>
+            <small class="text-muted">
+              {{ msg.created_at|date:"d/m/Y H:i" }}
+            </small>
+          </div>
+          <div class="mt-2">
+            {{ msg.message|linebreaksbr }}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="text-muted">Ainda não há mensagens.</div>
+    {% endif %}
+
+    <hr>
+
+    <!-- NOVA MENSAGEM -->
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Nova mensagem</label>
+        {{ msg_form.message }}
+        {% if msg_form.message.errors %}
+          <div class="text-danger small mt-1">
+            {{ msg_form.message.errors }}
+          </div>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn btn-primary">
+        Enviar mensagem
+      </button>
+    </form>
+
+  </div>
+</div>
+
+<script>
+  // Aplica classe bootstrap nos inputs do form
+  document.querySelectorAll("textarea, input").forEach(el => {
+    if (!el.classList.contains("form-control")) {
+      el.classList.add("form-control");
+    }
+  });
+</script>
+
+{% endblock %}

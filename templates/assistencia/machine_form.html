@@ -1,0 +1,25 @@
+{% extends "assistencia/base.html" %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body p-4">
+    <h4 class="fw-bold mb-3">{{ title }}</h4>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="mb-3">{{ form.model.label_tag }}{{ form.model }}</div>
+      <div class="mb-3">{{ form.serial.label_tag }}{{ form.serial }}</div>
+
+      <div class="row">
+        <div class="col-8 mb-3">{{ form.city.label_tag }}{{ form.city }}</div>
+        <div class="col-4 mb-3">{{ form.uf.label_tag }}{{ form.uf }}</div>
+      </div>
+
+      <div class="mb-3">{{ form.purchase_date.label_tag }}{{ form.purchase_date }}</div>
+      <div class="mb-3">{{ form.notes.label_tag }}{{ form.notes }}</div>
+
+      <button class="btn btn-primary w-100">Salvar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

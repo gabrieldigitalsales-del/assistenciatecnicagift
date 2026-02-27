@@ -1,0 +1,44 @@
+{% extends "assistencia/base.html" %}
+{% block title %}Peças{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h3 class="mb-0">Solicitações de Peças</h3>
+    <div class="text-muted">Acompanhe suas solicitações.</div>
+  </div>
+  <a class="btn btn-dark" href="{% url 'assistencia:part_request_create' %}">+ Solicitar peça</a>
+</div>
+
+{% if part_requests %}
+  <div class="card shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Máquina</th>
+            <th>Status</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pr in part_requests %}
+            <tr>
+              <td>#{{ pr.id }}</td>
+              <td>{{ pr.machine }}</td>
+              <td>{{ pr.get_status_display }}</td>
+              <td>{{ pr.created_at|date:"d/m/Y H:i" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="alert alert-info">
+    Nenhuma solicitação criada ainda.
+    <a href="{% url 'assistencia:part_request_create' %}" class="alert-link">Criar agora</a>.
+  </div>
+{% endif %}
+{% endblock %}

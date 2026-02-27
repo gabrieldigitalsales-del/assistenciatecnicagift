@@ -1,0 +1,111 @@
+{% extends "assistencia/base.html" %}
+{% block title %}Solicitar Peça{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h3 class="mb-0">Solicitar Peça</h3>
+    <div class="text-muted">Preencha dados de contato e entrega.</div>
+  </div>
+  <a class="btn btn-outline-secondary" href="{% url 'assistencia:part_requests_list' %}">Voltar</a>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Máquina</label>
+          {{ form.machine }}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Contato (nome)</label>
+          {{ form.contact_name }}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Contato (telefone)</label>
+          {{ form.contact_phone }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Destinatário</label>
+          {{ form.shipping_name }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">CPF/CNPJ (opcional)</label>
+          {{ form.shipping_cpf_cnpj }}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">CEP</label>
+          {{ form.shipping_zip }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Endereço</label>
+          {{ form.shipping_address }}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Número</label>
+          {{ form.shipping_number }}
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Complemento</label>
+          {{ form.shipping_complement }}
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Bairro</label>
+          {{ form.shipping_neighborhood }}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Cidade</label>
+          {{ form.shipping_city }}
+        </div>
+
+        <div class="col-md-1">
+          <label class="form-label">UF</label>
+          {{ form.shipping_uf }}
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Observações</label>
+          {{ form.notes }}
+        </div>
+
+        <div class="col-12">
+          <hr>
+          <h5 class="mb-2">Item (opcional no MVP)</h5>
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label">Peça</label>
+              {{ item_form.part }}
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Qtd</label>
+              {{ item_form.qty }}
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Obs</label>
+              {{ item_form.notes }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-dark" type="submit">Enviar solicitação</button>
+        <a class="btn btn-outline-secondary" href="{% url 'assistencia:part_requests_list' %}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

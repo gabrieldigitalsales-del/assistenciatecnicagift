@@ -1,0 +1,59 @@
+{% extends "assistencia/base.html" %}
+{% block title %}Chamados{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h3 class="mb-0">Chamados</h3>
+    <div class="text-muted small">Acompanhe seus chamados e abra um novo quando precisar.</div>
+  </div>
+  <a class="btn btn-primary" href="/assistencia/tickets/new/">+ Novo chamado</a>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    {% if tickets %}
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th style="width:90px;">#</th>
+              <th>Máquina</th>
+              <th style="width:140px;">Status</th>
+              <th style="width:140px;">Prioridade</th>
+              <th style="width:190px;">Atualizado</th>
+              <th style="width:130px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for t in tickets %}
+            <tr>
+              <td class="fw-bold">#{{ t.id }}</td>
+              <td>
+                <div class="fw-semibold">{{ t.machine }}</div>
+                <div class="text-muted small">{{ t.get_category_display|default:t.category }}</div>
+              </td>
+              <td><span class="badge bg-secondary">{{ t.get_status_display }}</span></td>
+              <td><span class="badge bg-light text-dark border">{{ t.get_priority_display }}</span></td>
+              <td class="text-muted small">{{ t.updated_at|date:"d/m/Y H:i" }}</td>
+              <td class="text-end">
+                <!-- ✅ DETALHE DO CHAMADO (não é /new/) -->
+                <a class="btn btn-outline-dark btn-sm" href="/assistencia/tickets/{{ t.id }}/">
+                  Abrir
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <div class="fw-bold">Nenhum chamado ainda.</div>
+        <div class="text-muted">Clique em “Novo chamado” para abrir o primeiro.</div>
+        <a class="btn btn-primary mt-3" href="/assistencia/tickets/new/">Abrir chamado</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

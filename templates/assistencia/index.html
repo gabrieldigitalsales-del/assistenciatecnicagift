@@ -1,0 +1,26 @@
+{% extends "assistencia/base.html" %}
+{% block content %}
+<section class="max-w-6xl mx-auto px-4 py-10">
+  <h1 class="text-3xl font-black">Assistência Técnica</h1>
+  <p class="mt-2 text-slate-600">
+    Aqui entra o seu programa já pronto. Existem 2 jeitos:
+  </p>
+
+  <div class="mt-6 grid md:grid-cols-2 gap-4">
+    <div class="p-6 rounded-3xl border border-slate-200 bg-white">
+      <div class="font-black">Opção A — Integrar direto (Django)</div>
+      <p class="mt-2 text-sm text-slate-600">
+        Se seu sistema já é Django: copiamos a app (models/views/templates),
+        incluímos as rotas aqui e pronto: tudo no mesmo login/domínio.
+      </p>
+    </div>
+    <div class="p-6 rounded-3xl border border-slate-200 bg-white">
+      <div class="font-black">Opção B — Sistema separado</div>
+      <p class="mt-2 text-sm text-slate-600">
+        Se seu sistema é Flask/outro: podemos manter rodando separado e usar
+        link direto (ou proxy) em <b>/assistencia/</b>.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

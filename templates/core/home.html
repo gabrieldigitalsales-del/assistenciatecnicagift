@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+  <div class="max-w-6xl mx-auto px-4 py-16 grid lg:grid-cols-2 gap-12 items-center">
+    <div>
+      <div class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1 rounded-full bg-white/10 border border-white/10">
+        <span class="w-2 h-2 rounded-full bg-[var(--brand)]"></span>
+        Engenharia industrial • Performance • Segurança
+      </div>
+
+      <h1 class="mt-5 text-4xl sm:text-5xl font-black leading-tight">
+        Potência e precisão para elevar sua produção
+      </h1>
+
+      <p class="mt-4 text-white/80 text-lg">
+        Máquinas projetadas para trabalho contínuo, robustez real e padronização de processos.
+        Fale com a equipe e receba uma proposta sob medida.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="{% url 'request_quote' %}" class="px-5 py-3 rounded-2xl btn-primary text-white font-bold ring-brand">
+          Solicitar orçamento
+        </a>
+        <a href="{% url 'machines' %}" class="px-5 py-3 rounded-2xl bg-white/10 border border-white/15 font-bold hover:bg-white/15">
+          Ver máquinas
+        </a>
+        <a href="/assistencia/" class="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 font-bold hover:bg-white/10">
+          Assistência técnica
+        </a>
+      </div>
+
+      <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+          <div class="font-black text-xl">+7</div>
+          <div class="text-white/70">anos no mercado</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+          <div class="font-black text-xl">NR-12</div>
+          <div class="text-white/70">foco em segurança</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+          <div class="font-black text-xl">Suporte</div>
+          <div class="text-white/70">especializado</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+          <div class="font-black text-xl">Alta</div>
+          <div class="text-white/70">durabilidade</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative">
+      <div class="absolute -inset-6 bg-[var(--brand)]/20 blur-3xl rounded-full"></div>
+      <div class="relative rounded-3xl bg-white/5 border border-white/10 p-6">
+
+        <!-- HERO IMAGE (static/img/hero-machine.png) -->
+        <div class="aspect-[16/10] rounded-2xl overflow-hidden border border-white/10 bg-white/5 flex items-center justify-center">
+          <img
+            src="{% static 'img/hero-machine.png' %}"
+            alt="Máquina em destaque"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;color:rgba(255,255,255,.7);font-size:14px;padding:16px;text-align:center;&quot;>Imagem não encontrada em <b>static/img/hero-machine.png</b></div>';"
+          />
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-4 py-14">
+  <div class="grid md:grid-cols-2 gap-10 items-start">
+    <div>
+      <h2 class="text-3xl font-black tracking-tight">
+        Tecnologia e robustez para quem exige resultados
+      </h2>
+      <p class="mt-3 text-slate-600">
+        Projetamos máquinas industriais com foco em durabilidade, performance e segurança.
+        Estruturas reforçadas, componentes de fácil manutenção e suporte técnico de verdade.
+      </p>
+
+      <ul class="mt-6 space-y-3 text-sm">
+        <li class="flex gap-3"><span class="text-[var(--brand)] font-black">✓</span> Materiais industriais de alta resistência</li>
+        <li class="flex gap-3"><span class="text-[var(--brand)] font-black">✓</span> Operação contínua sem perda de performance</li>
+        <li class="flex gap-3"><span class="text-[var(--brand)] font-black">✓</span> Manutenção simples e peças acessíveis</li>
+        <li class="flex gap-3"><span class="text-[var(--brand)] font-black">✓</span> Segurança integrada e foco em padronização</li>
+      </ul>
+
+      <div class="mt-8">
+        <a href="{% url 'request_quote' %}" class="inline-flex px-5 py-3 rounded-2xl btn-primary text-white font-bold">
+          Quero uma proposta
+        </a>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      {% for item in featured %}
+      <a href="{{ item.get_absolute_url }}" class="group p-6 rounded-3xl border border-slate-200 hover:border-slate-300 hover:shadow-lg transition bg-white">
+        <div class="text-[var(--brand)] font-black text-lg">{{ item.name }}</div>
+        <p class="mt-2 text-sm text-slate-600">{{ item.short_description|default:"Clique para ver detalhes e especificações." }}</p>
+        <div class="mt-4 text-sm font-bold text-slate-900 group-hover:text-[var(--brand)]">Ver detalhes →</div>
+      </a>
+      {% empty %}
+      <div class="p-6 rounded-3xl border border-slate-200 bg-slate-50 text-sm text-slate-600">
+        Cadastre máquinas no admin para aparecerem aqui (is_featured=True).
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="bg-slate-950 text-white">
+  <div class="max-w-6xl mx-auto px-4 py-14">
+    <h3 class="text-2xl font-black">Soluções industriais que elevam sua performance</h3>
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-6 rounded-3xl bg-white/5 border border-white/10">
+        <div class="font-black text-[var(--brand)]">Produtividade</div>
+        <p class="mt-2 text-sm text-white/75">Mais ritmo, estabilidade e rendimento diário.</p>
+      </div>
+      <div class="p-6 rounded-3xl bg-white/5 border border-white/10">
+        <div class="font-black text-[var(--brand)]">Durabilidade</div>
+        <p class="mt-2 text-sm text-white/75">Projetadas para anos de uso em condições intensas.</p>
+      </div>
+      <div class="p-6 rounded-3xl bg-white/5 border border-white/10">
+        <div class="font-black text-[var(--brand)]">Precisão</div>
+        <p class="mt-2 text-sm text-white/75">Processos com velocidade, repetibilidade e segurança.</p>
+      </div>
+      <div class="p-6 rounded-3xl bg-white/5 border border-white/10">
+        <div class="font-black text-[var(--brand)]">Confiabilidade</div>
+        <p class="mt-2 text-sm text-white/75">Testes e validações focados em resultado real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-4 py-14">
+  <div class="flex items-end justify-between gap-4">
+    <div>
+      <h3 class="text-2xl font-black">Máquinas</h3>
+      <p class="text-slate-600 mt-1">Veja as opções e solicite orçamento em 1 clique.</p>
+    </div>
+    <a class="text-sm font-bold text-[var(--brand)] hover:underline" href="{% url 'machines' %}">Ver catálogo →</a>
+  </div>
+
+  <div class="mt-6 grid md:grid-cols-3 gap-4">
+    {% for m in machines %}
+    <a href="{{ m.get_absolute_url }}" class="p-6 rounded-3xl border border-slate-200 hover:shadow-lg transition bg-white">
+      <div class="font-black text-lg">{{ m.name }}</div>
+      <p class="mt-2 text-sm text-slate-600">{{ m.short_description|default:"Clique para ver detalhes." }}</p>
+      <div class="mt-4 inline-flex text-sm font-bold text-[var(--brand)]">Solicitar orçamento →</div>
+    </a>
+    {% empty %}
+    <div class="p-6 rounded-3xl border border-slate-200 bg-slate-50 text-sm text-slate-600">
+      Cadastre as máquinas no admin para listar aqui.
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="bg-slate-50">
+  <div class="max-w-6xl mx-auto px-4 py-14">
+    <div class="rounded-3xl bg-white border border-slate-200 p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div>
+        <div class="text-2xl font-black">Pronto para elevar sua produção ao próximo nível?</div>
+        <p class="mt-2 text-slate-600">Explique sua necessidade e a gente devolve uma proposta objetiva.</p>
+      </div>
+      <a href="{% url 'request_quote' %}" class="px-6 py-3 rounded-2xl btn-primary text-white font-bold">
+        Solicitar orçamento
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}
